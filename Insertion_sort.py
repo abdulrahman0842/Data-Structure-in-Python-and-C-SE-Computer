@@ -1,64 +1,42 @@
-import array as arr
+def ins_sort(marks):
+    # Traverse through 1 to len(a)
+    for i in range(1, len(marks)):
 
-# Accept the Roll Numbers of the students
+        key = marks[i]
 
-def accept_roll():
-    a = arr.array('I', [])
-    no_stud = int(input("Enter the number of Students : "))
-    for i in range(0, no_stud):
-        a.append(int(input("Enter the Roll Number : ")))
-    return a
+        # Move elements of a[0..i-1], that are
+        # greater than key, to one position ahead
+        # of their current position
+        j = i - 1
+        while j >= 0 and key < marks[j]:
+            marks[j + 1] = marks[j]
+            j -= 1
+        marks[j + 1] = key
+    return marks
 
+def top_five_marks(marks):
+    print("Top five score are : ")
+    cnt = len(marks)
 
-# Print the Roll Numbers of the Students
+    if cnt < 5:
+        start, stop = cnt - 1, -1  # stop set to -1 as we want to print the 0th element
+    else:
+        start, stop = cnt - 1, cnt - 6
 
-def print_roll(a):
-    for i in range(0, len(a)):
-        print("\t", a[i], end=" ")
-    print()
+    for i in range(start, stop, -1):
+        print(" {0:.2f}".format(marks[i]), end="\n")
 
-# Linear Search
+marks=[]
+n = int(input("Enter number of students whose marks are to be displayed : "))
+print("Enter marks for",n,"students (Press ENTER after every students marks): ")
+for i in range(0, n):
+    ele = int(input())
+    marks.append(ele)  # adding the element
 
-def linear_search(a, x):
-    for i in range(len(a)):
+print("The marks of",n,"students are : ")
+print(marks)
 
-        if a[i] == x:
-            return i
+flag=1;
 
-    return -1
-
-
-
-
-
-flag=1
-while flag == 1:
-        menu = "1. Accept Student Roll Numbers of students who attended training program\n" \
-               "2. Display the Roll Numbers of students who attended training program\n" \
-               "3. Linear Search \n" \
-               "4. Exit \n "
-        print(menu)
-        choice = int(input("Enter your choice : "))
-
-        if choice == 1:
-            unsort_A = accept_roll()
-
-        elif choice == 2:
-            print_roll(unsort_A)
-
-        elif choice == 3:
-            roll = int(input("Enter the Roll Number to be search : "))
-
-            index = linear_search(unsort_A, roll)
-            if index != -1:
-                print("Roll number", roll, " at the index", index, "has Attended the training program")
-            else:
-                print("Roll number", roll, "has not Attended the training program")
-        elif choice==4:
-            print("Thank You")
-            flag=0
-        else:
-            print("Wrong choice")
-            flag = 0
-
-        
+ins_sort(marks)
+top_five_marks(marks)
